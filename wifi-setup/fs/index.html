@@ -51,11 +51,11 @@
       <div class="form">
         <div class="">
           <div class="form-control">
-            <label>WiFi ssid:</label>
+            <label>Network:</label>
             <input type="text" id="ssid" value="CEREBRASC">
           </div>
           <div class="form-control">
-            <label>WiFi password:</label>
+            <label>Password:</label>
             <input type="password" id="pass">
           </div>
 			<div id="resultado"></div>
@@ -77,6 +77,14 @@
   <script>
     var saveButton = document.getElementById('save');
     var spinnerSpan = document.getElementById('spinner');
+	
+	//function sleep(milliseconds) {
+    //var start = new Date().getTime();
+    //for (var i = 0; i < 1e7; i++) {
+      //if ((new Date().getTime() - start) > milliseconds)
+        // break;
+      //}
+    //}	
     saveButton.onclick = function() {
       spinnerSpan.className = 'spin';
       var ssid = document.getElementById('ssid').value || '';
@@ -96,8 +104,11 @@
       }).then(function() {
         spinnerSpan.className = '';
       });
-	  //window.location="http://polartracker.com.br/";
-    };
+	
+	//sleep(5000)
+	window.location="http://polartracker.com.br/";
+	};
+	
   </script>
 
   </body>
