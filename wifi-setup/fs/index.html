@@ -86,6 +86,7 @@
     var saveButton = document.getElementById('save');
     var spinnerSpan = document.getElementById('spinner');
 	var responseVal = 'Informações sobre o dispositivo!'; // placeholder
+	var resp = ''; 
 	
 	document.getElementById("response").innerHTML = responseVal ? responseVal : '';
 	
@@ -112,6 +113,8 @@
       });
 	  
 	document.getElementById("response").innerHTML = responseVal ? responseVal : '';
+	document.getElementById("ssid").innerHTML = resp ? resp : '';
+	document.getElementById("pass").innerHTML = resp ? resp : '';
 	//sleep(5000)
 	//window.location="http://polartracker.com.br/";
 	};
