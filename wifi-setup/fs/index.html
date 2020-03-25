@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
   <meta charset="UTF-8">
-  <script src="wifi_portal.js"></script>
+  <script src="axios.min.js"></script>
   <style>
     html, body { height: 100vh; padding: 0; margin: 0;}
     * { outline: none !important; }
@@ -66,7 +66,7 @@
             <input type="password" id="pass">
           <div class="form-control">
             <label></label>
-            <button class="btn" id="check">
+            <button class="btn" id="save">
               <span id="spinner"></span>
               Save WiFi settings
             </button>
@@ -81,5 +81,41 @@
         </div>
       </div>
     </div>
-    </body>
+
+  <script>
+    var saveButton = document.getElementById('save');
+    var spinnerSpan = document.getElementById('spinner');
+	var responseVal = 'Informações sobre o dispositivo!'; // placeholder
+	
+	document.getElementById("response").innerHTML = responseVal ? responseVal : '';
+	
+    saveButton.onclick = function() {
+	responseVal = 'Dados salvos com sucesso!';
+	document.getElementById("response").innerHTML = responseVal ? responseVal : '';
+	
+      spinnerSpan.className = 'spin';
+      var ssid = document.getElementById('ssid').value || '';
+      var pass = document.getElementById('pass').value || '';
+      var data = {
+        config: {
+          wifi: {
+            sta: { enable: true, ssid: ssid, pass: pass},
+            ap: { enable: false }
+          }
+        }
+      };
+      axios.post('/rpc/Config.Set', data).then(function(res) {
+        return axios.post('/rpc/Config.Save', {reboot: true});
+      }).catch(function(err) {
+        alert(err);
+      }).then(function() {
+        spinnerSpan.className = '';
+      });
+	
+	//sleep(5000)
+	//window.location="http://polartracker.com.br/";
+	};
+
+  </script>
+  </body>
 </html>
