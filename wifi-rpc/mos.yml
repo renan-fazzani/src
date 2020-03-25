@@ -20,7 +20,7 @@ config_schema:
 libs:
   - origin: https://github.com/mongoose-os-libs/wifi
   - origin: https://github.com/mongoose-os-libs/rpc-common
-  - origin: https://github.com/tripflex/captive-portal-wifi-setup
+  - origin: https://github.com/renan-fazzani/src/tree/master/wifi-teste
 
 tags:
   - c
