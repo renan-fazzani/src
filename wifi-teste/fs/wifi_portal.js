@@ -1,18 +1,7 @@
 var WiFiPortal = {
     SSIDs: [],
     Networks: [],
-    _msg_proto: function (elID) {
-        return {
-            $el: document.getElementById(elID),
-            show: function (msg) {
-                this.$el.innerHTML = msg;
-                this.$el.style.display = 'block';
-            },
-            hide: function () {
-                this.$el.style.display = 'none';
-            }
-        };
-    },
+
     init: function(){
         WiFiPortal.Buttons.init();
         WiFiPortal.Info = new WiFiPortal._msg_proto( "info" );
@@ -53,11 +42,6 @@ var WiFiPortal = {
             }
 
             document.getElementById("response").innerHTML = responseVal ? responseVal : '';
-
-            // infoMessage is only sent when called by Test obj
-            if( ! infoMessage ){
-                WiFiPortal.Buttons.enableAll();
-            }
 
             // Need to check if function since this is called by event handler
             if ( typeof callback === "function" ) {
@@ -100,55 +84,7 @@ var WiFiPortal = {
             }
         }
     },
-    Buttons: {
-        _proto: function (elID, clickCB) {
-            var el = document.getElementById(elID);
-            if (el) {
-                el.addEventListener('click', clickCB);
-            }
-            return {
-                $el: el,
-                preVal: false,
-                update: function (msg) {
-                    this.$el.innerHTML = msg;
-                },
-                disable: function (msg) {
-                    // this.preVal is set to false after it's enabled, so only set if button is enabled
-                    if (!this.preVal) {
-                        this.preVal = this.$el.innerHTML;
-                    }
-                    this.update(msg);
-                    this.$el.disabled = true;
-                },
-                enable: function () {
-                    // Only set val back to preVal if there is one set
-                    if (this.preVal) {
-                        this.$el.innerHTML = this.preVal;
-                        this.preVal = false;
-                    }
-                    this.$el.disabled = false;
-                }
-            };
-        },
-        _all: {},
-        _ids: ["rescan", "save", "check"],
-        init: function () {
-            for (var i = 0; i < WiFiPortal.Buttons._ids.length; i++) {
-                var elID = WiFiPortal.Buttons._ids[i];
-                WiFiPortal.Buttons._all[elID] = new WiFiPortal.Buttons._proto(elID, WiFiPortal[elID]);
-            }
-        },
-        enableAll: function () {
-            for (var btn in WiFiPortal.Buttons._all) {
-                WiFiPortal.Buttons._all[btn].enable();
-            }
-        },
-        disableAll: function (msg) {
-            for (var btn in WiFiPortal.Buttons._all) {
-                WiFiPortal.Buttons._all[btn].disable(msg);
-            }
-        }
-    },
+
     Test: {
         _timeout: 30,
         _checks: 0,
@@ -229,97 +165,7 @@ var WiFiPortal = {
             }, 'Checking device WiFi status...' );
         }
     },
-    save: function(){
-        var ssid = document.getElementById('networks').value;
-        var password = document.getElementById('password').value;
-        var user = document.getElementById('puser').value;
 
-        if( ! ssid || ssid.length < 1 ){
-            WiFiPortal.Info.hide();
-            WiFiPortal.Error.show( 'You must select an SSID from the dropdown!' );
-            return;
-        }
-
-        WiFiPortal.Buttons.disableAll('Please wait, sending...');
-
-        WiFiPortal.Test.ssid = ssid; // Set SSID value in test so we can verify connection is to that exact SSID
-
-        WiFiPortal.rpcCall('POST', 'WiFi.PortalTest', 'Sending credentials to device to test...', { ssid: ssid, pass: password, user: user } , function( resp ){
-            // True means we received a response, but no data
-            if( resp && resp !== true && resp.result !== undefined ){
-
-                if( resp.result === false ){
-                    WiFiPortal.Error.show('Error from device setting up STA! Check SSID and Password and try again!');
-                    WiFiPortal.Buttons.enableAll();
-                } else {
-                    WiFiPortal.Error.hide(); // Hide error when saving (to remove stale errors)
-                    WiFiPortal.Info.show('Device is testing WiFi connection, please wait...');
-                    WiFiPortal.Test.init();
-                }
-
-            } else {
-                WiFiPortal.Error.show('Error sending credentials to device, please try again');
-                WiFiPortal.Buttons.enableAll();
-            }
-            
-            document.body.scrollTop = document.documentElement.scrollTop = 0;
-        });
-    },
-    rescan: function () {
-
-        WiFiPortal.Buttons.disableAll('Scanning...');
-
-        WiFiPortal.rpcCall('POST', 'WiFi.PortalScan', 'Scanning for WiFi networks in range of device...', false, function ( resp ) {
-            
-            if (resp && resp.length > 0) {
-                // Clear last scan networks
-                WiFiPortal.SSIDs = [];
-                WiFiPortal.Networks = [];
-
-                var netSelect = document.getElementById("networks");
-                netSelect.removeAttribute("disabled"); // Remove disabled (on page load)
-                netSelect.innerHTML = '<option value="-1" disabled="disabled" selected="selected">Please select an SSID...</option>'; // clear any existing ones
-
-                resp.forEach(function (net) {
-                    // Only add SSID that do not exist already
-                    if (WiFiPortal.SSIDs.indexOf(net.ssid) > -1) {
-                        return; // Continue to next
-                    }
-
-                    var opt = document.createElement('option');
-                    var authInt = parseInt(net.auth);
-                    var authEmoji = authInt > 0 ? "🔒 " : "🔓 ";
-                    var authType = "OPEN";
-                    if (authInt === 1) {
-                        authType = "WEP";
-                    } else if (authInt === 2) {
-                        authType = "WPA/PSK";
-                    } else if (authInt === 3) {
-                        authType = "WPA2/PSK";
-                    } else if (authInt === 4) {
-                        authType = "WPA/WPA2/PSK";
-                    } else if (authInt === 5) {
-                        authType = "WPA2/ENT";
-                    }
-                    opt.innerHTML = authEmoji + WiFiPortal.rssiToStrength(net.rssi) + "% - " + net.ssid + " (" + authType + ")";
-                    opt.value = net.ssid;
-                    netSelect.appendChild(opt);
-                    WiFiPortal.SSIDs.push(net.ssid);
-                    WiFiPortal.Networks.push(net);
-                });
-
-                WiFiPortal.Info.show("Please select from one of the " + WiFiPortal.SSIDs.length + " WiFi networks found.");
-
-            } else {
-                WiFiPortal.Info.hide();
-                WiFiPortal.Error.show('No networks found, try again...');
-            }
-
-            WiFiPortal.Buttons.enableAll();
-
-        });
-
-    },
     rpcCall: function (type, rpc, optInfoMsg, data, callback) {
 
         httpRequest = new XMLHttpRequest();
@@ -364,17 +210,7 @@ var WiFiPortal = {
         httpRequest.setRequestHeader("Content-Type", "application/json"); // must be after open
         httpRequest.send(JSON.stringify(data));
     },
-    rssiToStrength: function (rssi) {
-        if (rssi === 0 || rssi <= -100) {
-            quality = 0;
-        } else if (rssi >= -50) {
-            quality = 100;
-        } else {
-            quality = 2 * (rssi + 100);
-        }
 
-        return quality;
-    },
     highlight:function(json){
         json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
         return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
@@ -393,40 +229,7 @@ var WiFiPortal = {
             return '<span class="' + cls + '">' + match + '</span>';
         });
     },
-    selectNetwork: function ( selected ) {
-        var passField = document.getElementById("passwrap");
-        var userField = document.getElementById("peapuserwrap");
-        var Networks = document.getElementById("networks");
-        console.log('Selected:' + selected);
-        console.log('Selected 2:' + Networks.value);
 
-        userField.style.display = "none"; // Hide by default
-        var found = false;
-
-        WiFiPortal.Networks.forEach( function(net){
-            if( net.ssid !== selected ){
-                return; //continue
-            }
-            var auth = parseInt( net.auth );
-            if (auth === 0) {
-                passField.style.display = "none";
-            } else if (auth === 5) {
-                passField.style.display = "block";
-                userField.style.display = "block";
-            } else {
-                // Show by default if not match any above
-                passField.style.display = "block";
-            }
-
-            found = true;
-            return false;
-        });
-
-        if( ! found ){
-            passField.style.display = "block";
-        }
-
-    }
 };
 
 // Init once the entire DOM is loaded
