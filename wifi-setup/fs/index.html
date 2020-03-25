@@ -91,8 +91,7 @@
 	
     saveButton.onclick = function() {
 	responseVal = 'Dados salvos com sucesso!';
-	document.getElementById("response").innerHTML = responseVal ? responseVal : '';
-	
+		
       spinnerSpan.className = 'spin';
       var ssid = document.getElementById('ssid').value || '';
       var pass = document.getElementById('pass').value || '';
@@ -111,7 +110,8 @@
       }).then(function() {
         spinnerSpan.className = '';
       });
-	
+	  
+	document.getElementById("response").innerHTML = responseVal ? responseVal : '';
 	//sleep(5000)
 	//window.location="http://polartracker.com.br/";
 	};
