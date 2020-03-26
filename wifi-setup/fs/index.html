@@ -86,10 +86,9 @@
     var saveButton = document.getElementById('save');
     var spinnerSpan = document.getElementById('spinner');
 	var responseVal = 'Informações sobre o dispositivo!'; // placeholder
-	var resp = ''; 
 	
 	document.getElementById("response").innerHTML = responseVal ? responseVal : '';
-	
+
     saveButton.onclick = function() {
 	responseVal = 'Dados salvos com sucesso!';
 		
@@ -105,7 +104,7 @@
         }
       };
       axios.post('/rpc/Config.Set', data).then(function(res) {
-        return axios.post('/rpc/Config.Save', {reboot: true});
+        return axios.post('/rpc/Config.Save', {reboot: false});
       }).catch(function(err) {
         alert(err);
       }).then(function() {
@@ -113,8 +112,8 @@
       });
 	  
 	document.getElementById("response").innerHTML = responseVal ? responseVal : '';
-	document.getElementById("ssid").innerHTML = resp ? resp : '';
-	document.getElementById("pass").innerHTML = resp ? resp : '';
+	//document.getElementById('ssid').value'';
+	//document.getElementById('pass').value'';
 	//sleep(5000)
 	//window.location="http://polartracker.com.br/";
 	};
