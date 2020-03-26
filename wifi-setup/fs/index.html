@@ -104,7 +104,7 @@
         }
       };
       axios.post('/rpc/Config.Set', data).then(function(res) {
-        return axios.post('/rpc/Config.Save', {reboot: false});
+        return axios.post('/rpc/Config.Save', {reboot: true});
       }).catch(function(err) {
         alert(err);
       }).then(function() {
