@@ -104,16 +104,16 @@
         }
       };
       axios.post('/rpc/Config.Set', data).then(function(res) {
-      if (return axios.post('/rpc/Config.Save', {reboot: true}))
-		document.getElementById("response").innerHTML = responseVal ? responseVal : '';
-		
+        return axios.post('/rpc/Config.Save', {reboot: true});
+		  if(axios.post('/rpc/Config.Save', {reboot: true}))
+		       document.getElementById("response").innerHTML = responseVal ? responseVal : '';
       }).catch(function(err) {
         alert(err);
       }).then(function() {
         spinnerSpan.className = '';
       });
 	  
-	document.getElementById("response").innerHTML = responseVal ? responseVal : '';
+	
 	//document.getElementById('ssid').value'';
 	//document.getElementById('pass').value'';
 	//sleep(5000)
