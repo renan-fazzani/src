@@ -1,48 +1,123 @@
-<html>
-    <title>Configure Device WiFi</title>
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-<link rel="stylesheet" href="wifi_portal.css">
-<script src="wifi_portal.js"></script>
-</head>
-<body>
-    <div>
-        <div id="form">
-            <div id="header">
-                Configure WiFi Renan
-            </div>
-            <div id="error" class="message"></div>
-            <div id="info" class="message"></div>
-            <div id="networkwrap">
-                <label id="netlabel">
-                    Network
-                </label>
-                <select name="dropdown" id="networks" disabled="disabled" required="required">
-                    <option value="-1" disabled="disabled" selected="selected">
-                        Waiting for networks...
-                    </option> 
-                </select>
-            </div>
-            <div id="peapuserwrap">
-                <label id="userlabel">
-                    User
-                </label>
-                <input name="user" type="text" placeholder="username" id="puser" autocomplete="off" />
-            </div>
-            <div id="passwrap">
-                <label id="passlabel">
-                    Password
-                </label>
-                <input name="password" type="text" placeholder="password" id="password" autocomplete="off" />
-            </div>
-            <button id="save" class="btn">Save & Test</button>
-            <button id="rescan" class="btn">Rescan</button>
-            <button id="check" class="btn">Check</button>
-        </div>
-        <div style="margin-top: 20px; display: block;">
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="UTF-8">
+  <script src="axios.min.js"></script>
+  <style>
+    html, body { height: 100vh; padding: 0; margin: 0;}
+    * { outline: none !important; }
+    body { color: #454955; font: 15px/1.5 Verdana, Helvetica, Arial, sans-serif; }
+    h1, h2, h3, h4, h5, h6, b, th, strong, .nav-link { color: #777; }
+    input, button, div, pre, p { font: inherit; }
+    button {
+      color: white; padding: 0.4em 1em; border-radius: 0.3em;
+      border: none; cursor: pointer;
+    }
+    input[type=text] {
+      padding: 0.2em 0.7em; position: relative;
+      border: 1px solid #cdcdcd; border-color: rgba(0, 0, 0, .15);
+      background-color: white; font-size: 16px;
+
+    }
+	input[type=password] {
+      padding: 0.2em 0.7em; position: relative;
+      border: 1px solid #cdcdcd; border-color: rgba(0, 0, 0, .15);
+      background-color: white; font-size: 16px;
+
+    }
+	
+	pre {
+      padding: 3em 0.7em; position: relative;
+      border: 1px solid #cdcdcd; border-color: rgba(0, 0, 0, .15);
+      background-color: white; font-size: 16px;
+    }
+	
+    h1 { margin: 0; padding-top: 0.5em; text-align: center; }
+    .container { padding: 0 1em; margin: 1em auto; max-width: 480px; background: #F2F2F2; }
+    .form-control { margin: 0.5em 0; }
+    .form-control input, .form-control button { min-width: 15em; }
+    .form label { min-width: 8em; display: inline-block; }
+    .form { padding: 1em 0; }
+    .btn { background: #458B74; }
+    .spin {
+      display: inline-block; width: 0.9em; height: 0.9em;
+      margin-bottom: -0.2em; 
+      border: 0.15em solid rgba(255,255,255,.5);
+      border-radius: 50%;
+      border-top-color: #fff;
+      animation: spin 1s linear infinite;
+      -webkit-animation: spin 1s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @-webkit-keyframes spin { to { -webkit-transform: rotate(360deg); } }
+  </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="">Polar tracker </h1>
+      <div class="form">
+        <div class="">
+          <div class="form-control">
+            <label>Network:</label>
+            <input type="text" id="ssid" value="CEREBRASC">
+          </div>
+          <div class="form-control">
+            <label>Password:</label>
+            <input type="password" id="pass">
+          <div class="form-control">
+            <label></label>
+            <button class="btn" id="save">
+              <span id="spinner"></span>
+              Save WiFi settings
+            </button>
+		  </div>
+          <div align="center" class="form-control">
+            <p><font size="1">Created by Cerebrasc® - 2020</font></p>
+          </div>
+		   <div style="margin-top: 20px; display: block;">
             <pre id="response"></pre>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
-</body>
+
+  <script>
+    var saveButton = document.getElementById('save');
+    var spinnerSpan = document.getElementById('spinner');
+	var responseVal = 'Informações sobre o dispositivo!'; // placeholder
+	
+	document.getElementById("response").innerHTML = responseVal ? responseVal : '';
+
+    saveButton.onclick = function() {
+	responseVal = 'Dados salvos com sucesso!';
+		
+      spinnerSpan.className = 'spin';
+      var ssid = document.getElementById('ssid').value || '';
+      var pass = document.getElementById('pass').value || '';
+      var data = {
+        config: {
+          wifi: {
+            sta: { enable: true, ssid: ssid, pass: pass},
+            ap: { enable: false }
+          }
+        }
+      };
+      axios.post('/rpc/Config.Set', data).then(function(res) {
+        return axios.post('/rpc/Config.Save', {reboot: true});
+      }).catch(function(err) {
+        alert(err);
+      }).then(function() {
+        spinnerSpan.className = '';
+      });
+	  
+	document.getElementById("response").innerHTML = responseVal ? responseVal : '';
+	//document.getElementById('ssid').value'';
+	//document.getElementById('pass').value'';
+	//sleep(5000)
+	//window.location="http://polartracker.com.br/";
+	};
+
+  </script>
+  </body>
 </html>
