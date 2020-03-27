@@ -92,7 +92,8 @@
   <script>
     var saveButton = document.getElementById('save');
     var spinnerSpan = document.getElementById('spinner');
-	var responseVal = '!'; // placeholder
+	var responseVal = ''; // placeholder
+	var RespSsid = '';
 	
     saveButton.onclick = function() {
 	responseVal = 'Dados salvos com sucesso!';
@@ -192,6 +193,8 @@
                 var jsonResponse = resp.wifi ? resp.wifi : resp;
                 var stringifyJson = JSON.stringify(jsonResponse, undefined, 2);
                 responseVal = highlight(stringifyJson);
+				const obj = JSON.parse(responseVal);
+				responseVal = obj.ssid;
             } else {
                 responseVal = "Unable to get info from device";
             }
