@@ -30,6 +30,7 @@
       padding: 3em 0.7em; position: relative;
       border: 1px solid #cdcdcd; border-color: rgba(0, 0, 0, .15);
       background-color: white; font-size: 16px;
+	  color: blue; font: 13px/1.5 Verdana;
     }
 	
     h1 { margin: 0; padding-top: 0.5em; text-align: center; }
@@ -59,7 +60,7 @@
         <div class="">
           <div class="form-control">
             <label>Network:</label>
-            <input type="text" id="ssid" value="CEREBRASC">
+            <input type="text" id="ssid">
           </div>
           <div class="form-control">
             <label>Password:</label>
@@ -116,12 +117,6 @@
       }).then(function() {
         spinnerSpan.className = '';
       });
-	  
-	
-	//document.getElementById('ssid').value'';
-	//document.getElementById('pass').value'';
-	//sleep(5000)
-	//window.location="http://polartracker.com.br/";
 	};
 	
 	function rpcCall(type, rpc, optInfoMsg, data, callback) {
@@ -200,7 +195,7 @@
                 var stringifyJson = JSON.stringify(jsonResponse, undefined, 2);
                 responseVal = highlight(stringifyJson);
             } else {
-                responseVal = "Unable to get info from device by Renan";
+                responseVal = "Unable to get info from device";
             }
 
             document.getElementById("response").innerHTML = responseVal ? responseVal : '';
