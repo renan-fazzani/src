@@ -212,10 +212,10 @@
         var ssid = document.getElementById('ssid').value;
         var password = document.getElementById('pass').value;
 
-        rpcCall('POST', 'Config.Set', { ssid: ssid, pass: password } , function( resp ){
-		return rpcCall('POST', 'Config.Save', {reboot: true}, function( resp ));
+        rpcCall('POST', 'Config.Set', { ssid: ssid, pass: password } , function( resp ){		
 		});
-		
+		rpcCall('POST', 'Config.Save', {reboot: true}, function( resp ){
+		});
 		if (httpRequest.status !== 200) {
 			 alert("Failed to save data !");
 	    }
