@@ -200,8 +200,8 @@
 		}
         document.getElementById("response").innerHTML = responseVal ? responseVal : '';
 		
-		//var data = JSON.stringify(str_request);
-        xhrs.send(false);
+		var data = false;
+        xhrs.send(JSON.stringify(data));
 /*
         rpcCall('GET', 'Sys.GetInfo', infoMessage ? infoMessage : false, false, function (resp) {
             var responseVal = 'Error'; // placeholder
