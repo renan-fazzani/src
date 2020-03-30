@@ -149,9 +149,9 @@
                 }
                 return;
             } 
-			else{
-			  alert("Save success !");			
-			}
+			//else{
+			  //alert("Save success !");			
+			//}
 
             console.log('responseText', httpRequest.responseText);
             var httpResponse = JSON.parse(httpRequest.responseText);
@@ -220,6 +220,12 @@
 		});
 		rpcCall('POST', 'Config.Save', {reboot: true}, function( resp ){
 		});
+		if(status_fg !== 200){
+		  alert("Erro ao salvar dados no dispositivo!");	
+		}
+		else{
+			  alert("Save success !");			
+			}
     };
 		
   </script>
