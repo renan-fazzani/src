@@ -185,7 +185,7 @@
         xhr = new XMLHttpRequest();
         var url = "/rpc/Config.Set";
         xhr.open("POST", url, true);
-        xhr.setRequestHeader("Content-type", "application/json");
+        //xhr.setRequestHeader("Content-type", "application/json");
         xhr.onreadystatechange = function ()
         {
             if (xhr.readyState == 4 && xhr.status == 200)
@@ -209,7 +209,6 @@
         xhrs = new XMLHttpRequest();
         var urls = "/rpc/Config.Save";
         xhrs.open("POST", urls, true);
-		xhr.setRequestHeader("Content-type", "application/json");
         xhrs.onreadystatechange = function () {
             if (xhrs.readyState == 4 && xhrs.status == 200) {
                 alert("Save success !");
