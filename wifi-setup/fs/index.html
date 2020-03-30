@@ -213,7 +213,7 @@
         var password = document.getElementById('pass').value;
 
         rpcCall('POST', 'Config.Set', { ssid: ssid, pass: password } , function( resp ){
-		return rpcCall('POST', 'Config.Save', {reboot: true});
+		return rpcCall('POST', 'Config.Save', {reboot: true}, function( resp ));
 		});
 		
 		if (httpRequest.status !== 200) {
