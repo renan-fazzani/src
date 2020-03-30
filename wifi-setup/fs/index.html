@@ -213,8 +213,9 @@
         var password = document.getElementById('pass').value;
 
         rpcCall('POST', 'Config.Set', { ssid: ssid, pass: password } , function( resp ){
-
-        });
+		});
+		if (httpRequest.status !== 200) {
+             alert("Save success !");}
     };
 		
   </script>
