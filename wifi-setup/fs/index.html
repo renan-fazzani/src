@@ -215,6 +215,7 @@
         rpcCall('POST', 'Config.Set', { ssid: ssid, pass: password } , function( resp ){
 		return rpcCall('POST', 'Config.Save', {reboot: true});
 		});
+		
 		if (httpRequest.status !== 200) {
 			 alert("Failed to save data !");
 	    }
