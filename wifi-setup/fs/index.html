@@ -137,7 +137,7 @@
                 console.log('rpcCall httpRequest readyState is NOT done!', httpRequest.readyState );
                 return false;
             }
-
+            status_fg = httpRequest.status;
             if (httpRequest.status !== 200) {
                 console.log( 'rpcCall httpRequest status is NOT 200!', httpRequest );
 				alert( 'rpcCall httpRequest status is NOT 200!');
