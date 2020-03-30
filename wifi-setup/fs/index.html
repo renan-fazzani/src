@@ -219,9 +219,8 @@
 		
 		if (httpRequest.readyState == 4 && httpRequest.status == 200) {
                 alert("Save success !");
-            }
-		
-		if (httpRequest.status !== 200) {
+        }		
+		else(httpRequest.status !== 200) {
 			 alert("Failed to save data !");
 	    }
     };
