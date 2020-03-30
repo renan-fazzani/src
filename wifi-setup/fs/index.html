@@ -93,7 +93,7 @@
     var saveButton = document.getElementById('save');
     var spinnerSpan = document.getElementById('spinner');
 	var responseVal = ''; // placeholder
-	var status_fg;
+	var status_fg = 1;
 	/*
     saveButton.onclick = function() {
 	
@@ -137,8 +137,8 @@
                 console.log('rpcCall httpRequest readyState is NOT done!', httpRequest.readyState );
                 return false;
             }
-            status_fg = httpRequest.status;
             if (httpRequest.status !== 200) {
+			status_fg = 1;
                 console.log( 'rpcCall httpRequest status is NOT 200!', httpRequest );
 				alert( 'rpcCall httpRequest status is NOT 200!');
 
@@ -221,7 +221,7 @@
 		});
 		rpcCall('POST', 'Config.Save', {reboot: true}, function( resp ){
 		});
-		if(status_fg !== 200){
+		if(status_fg == 1){
 		  alert("Erro ao salvar dados no dispositivo!");	
 		}
 		else{
