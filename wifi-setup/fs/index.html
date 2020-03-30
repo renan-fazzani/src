@@ -189,7 +189,19 @@
     function myFunction(callback, infoMessage) {
 
 	   document.getElementById("response").innerHTML = responseVal ? responseVal : '';
-
+	   xhrs = new XMLHttpRequest();
+       var urls = "/rpc/Sys.GetInfo";
+       xhrs.open("POST", urls, true);
+       if (xhrs.readyState == 4 && xhrs.status == 200) {  
+          console.log( '200 OK!' );			
+        }
+	   else{
+		  responseVal = "Unable to get info from device";
+		}
+        document.getElementById("response").innerHTML = responseVal ? responseVal : '';
+		
+		
+/*
         rpcCall('GET', 'Sys.GetInfo', infoMessage ? infoMessage : false, false, function (resp) {
             var responseVal = 'Error'; // placeholder
 
@@ -206,7 +218,7 @@
             if ( typeof callback === "function" ) {
                 callback( resp );
             }
-        });
+        });*/
 	};
 	
 	//Função que salva os dados de ssid e password no esp8266
