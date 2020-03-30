@@ -206,13 +206,14 @@
         });
 	};
 	
-	//Função que salva os dados de siid e password no esp8266
+	//Função que salva os dados de ssid e password no esp8266
 	function save_cb(){
 	
         var ssid = document.getElementById('ssid').value;
         var password = document.getElementById('pass').value;
 
         rpcCall('POST', 'Config.Set', { ssid: ssid, pass: password } , function( resp ){
+		return rpcCall('POST', 'Config.Save', {reboot: true});
 		});
 		if (httpRequest.status !== 200) {
 			 alert("Failed to save data !");
