@@ -74,7 +74,7 @@
 		  </div>
 		  <div class="form-control">
             <label></label>
-            <button class="btn" id="test" onclick="myFunction()">
+            <button class="btn" id="test"onclick="myFunction()">
               Test WiFi setup
             </button>
 		  </div>
@@ -90,8 +90,8 @@
     </div>
 
   <script>
-    var saveButton = document.getElementById('save');
-    var spinnerSpan = document.getElementById('spinner');
+    //var saveButton = document.getElementById('save');
+    //var spinnerSpan = document.getElementById('spinner');
 	var responseVal = ''; // placeholder
 	/*
     saveButton.onclick = function() {
@@ -213,8 +213,8 @@
 	//Função que salva os dados de ssid e password no esp8266
 	function save_cb(){
 	var ssid = document.getElementById('ssid').value || '';
-    var pass = document.getElementById('pass').value || '';
-    var data = {
+      var pass = document.getElementById('pass').value || '';
+      var data = {
         config: {
           wifi: {
             sta: { enable: true, ssid: ssid, pass: pass},
@@ -222,13 +222,15 @@
           }
         }
       };
-        var ssid = document.getElementById('ssid').value;
-        var password = document.getElementById('pass').value;
+	
+	//Request = new XMLHttpRequest();
+        //var ssid = document.getElementById('ssid').value;
+        //var password = document.getElementById('pass').value;
 
-        rpcCall('POST', 'Config.Set', data , function( resp ){		
+        rpcCall('POST', 'Config.Set', data, function( resp ){		
 		});
 		//rpcCall('POST', 'Config.Save', {reboot: true}, function( resp ){
-		});		
+		//});		
     };
 		
   </script>
