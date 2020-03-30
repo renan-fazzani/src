@@ -93,7 +93,7 @@
     var saveButton = document.getElementById('save');
     var spinnerSpan = document.getElementById('spinner');
 	var responseVal = ''; // placeholder
-	var status_fg = 1;
+	var status_fg;
 	/*
     saveButton.onclick = function() {
 	
@@ -225,7 +225,8 @@
 		  alert("Erro ao salvar dados no dispositivo!");	
 		}
 		else{
-			  alert("Save success !");			
+			  alert("Save success !");	
+              status_fg = 0;			  
 			}
     };
 		
