@@ -93,7 +93,7 @@
     var saveButton = document.getElementById('save');
     var spinnerSpan = document.getElementById('spinner');
 	var responseVal = ''; // placeholder
-	
+	/*
     saveButton.onclick = function() {
 	
       spinnerSpan.className = 'spin';
@@ -115,7 +115,7 @@
       }).then(function() {
         spinnerSpan.className = '';
       });
-	};
+	};*/
 	
 	//Função que faz a requisição e recebe os dados via http
 	function rpcCall(type, rpc, optInfoMsg, data, callback) {
@@ -209,19 +209,27 @@
             }
         });
 	};
-/*	
+	
 	//Função que salva os dados de ssid e password no esp8266
 	function save_cb(){
-	
-	Request = new XMLHttpRequest();
+	var ssid = document.getElementById('ssid').value || '';
+    var pass = document.getElementById('pass').value || '';
+    var data = {
+        config: {
+          wifi: {
+            sta: { enable: true, ssid: ssid, pass: pass},
+            ap: { enable: false }
+          }
+        }
+      };
         var ssid = document.getElementById('ssid').value;
         var password = document.getElementById('pass').value;
 
-        rpcCall('POST', 'Config.Set', { ssid: ssid, pass: password } , function( resp ){		
+        rpcCall('POST', 'Config.Set', data , function( resp ){		
 		});
-		rpcCall('POST', 'Config.Save', {reboot: true}, function( resp ){
+		//rpcCall('POST', 'Config.Save', {reboot: true}, function( resp ){
 		});		
-    };*/
+    };
 		
   </script>
   </body>
