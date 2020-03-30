@@ -93,7 +93,6 @@
     var saveButton = document.getElementById('save');
     var spinnerSpan = document.getElementById('spinner');
 	var responseVal = ''; // placeholder
-	var status_fg;
 	/*
     saveButton.onclick = function() {
 	
@@ -138,9 +137,8 @@
                 return false;
             }
             if (httpRequest.status !== 200) {
-			status_fg = 1;
                 console.log( 'rpcCall httpRequest status is NOT 200!', httpRequest );
-				alert( 'rpcCall httpRequest status is NOT 200!');
+				//alert( 'rpcCall httpRequest status is NOT 200!');
 
                 if( httpRequest.responseText && httpRequest.responseText.length > 0 ){
                     //WiFiPortal.Error.show( "Error from device ( " + httpRequest.responseText + " ) -- Please try again");
@@ -214,6 +212,7 @@
 	//Função que salva os dados de ssid e password no esp8266
 	function save_cb(){
 	
+	Request = new XMLHttpRequest();
         var ssid = document.getElementById('ssid').value;
         var password = document.getElementById('pass').value;
 
@@ -221,13 +220,16 @@
 		});
 		rpcCall('POST', 'Config.Save', {reboot: true}, function( resp ){
 		});
-		if(status_fg == 1){
-		  alert("Erro ao salvar dados no dispositivo!");	
-		}
-		else{
-			  alert("Save success !");	
-              status_fg = 0;			  
-			}
+		
+		
+		if (Request.readyState == 4 && Request.status == 200)
+            {
+                alert("Save success !");
+            }
+            else
+            {
+                alert("Erro ao salvar dados no dispositivo!");	
+            }
     };
 		
   </script>
