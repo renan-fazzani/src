@@ -152,8 +152,8 @@
                           <pre id="response"></pre>
                           </div>
                     <div class="form-group">
-                        <button type="submit" class="btn btn-default"onclick="setWifiConfig()">submit</button>
-                        <button type="submit" class="btn btn-default"onclick="saveWifiConfig()">Save</button>
+                        <button type="submit" class="btn btn-default"onclick="myFunction()">Info</button>
+                        <button type="submit" class="btn btn-default" id="save">Save</button>
                         <button type="submit" class="btn btn-default"onclick="reboot()">Reboot</button>
                     </div>	      
                 </form>
@@ -166,6 +166,141 @@
 </body>
 <script>
 
+    var saveButton = document.getElementById('save');
+    var spinnerSpan = document.getElementById('spinner');
+	var responseVal = ''; // placeholder
+	
+    saveButton.onclick = function() {
+	
+      spinnerSpan.className = 'spin';
+      var ssid = document.getElementById('ssid').value || '';
+      var pass = document.getElementById('pass').value || '';
+      var data = {
+        config: {
+          wifi: {
+            sta: { enable: true, ssid: ssid, pass: pass},
+            ap: { enable: false }
+          }
+        }
+      };
+      axios.post('/rpc/Config.Set', data).then(function(res) {
+        return axios.post('/rpc/Config.Save', {reboot: true});
+		//alert("Save success !");
+      }).catch(function(err) {
+        alert(err);
+      }).then(function() {
+        spinnerSpan.className = '';
+      });
+	};
+	
+	//Função que faz a requisição e recebe os dados via http
+	function rpcCall(type, rpc, optInfoMsg, data, callback) {
+
+        httpRequest = new XMLHttpRequest();
+
+        if (!httpRequest) {
+            //WiFiPortal.Error.show('Unable to create an XMLHttpRequest, try to manually set');
+            return callback( false );
+        }
+
+        if( optInfoMsg !== undefined && optInfoMsg ){
+            //WiFiPortal.Info.show(optInfoMsg);
+        }
+
+        httpRequest.onreadystatechange = function () {
+
+            if (httpRequest.readyState !== XMLHttpRequest.DONE) {
+                console.log('rpcCall httpRequest readyState is NOT done!', httpRequest.readyState );
+                return false;
+            }
+            if (httpRequest.status !== 200) {
+                console.log( 'rpcCall httpRequest status is NOT 200!', httpRequest );
+				//alert("Error saving data on the device!");	
+
+                if( httpRequest.responseText && httpRequest.responseText.length > 0 ){
+                    //WiFiPortal.Error.show( "Error from device ( " + httpRequest.responseText + " ) -- Please try again");
+                    callback(true);
+                } else {
+                    callback(false);
+                }
+                return;
+            } 
+			else{
+			  //alert("Save success !");			
+			}
+			
+            console.log('responseText', httpRequest.responseText);
+            var httpResponse = JSON.parse(httpRequest.responseText);
+            console.log('httpResponse', httpResponse);
+
+            callback(httpResponse);
+        };
+
+        // httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        httpRequest.open(type, '/rpc/' + rpc );
+        httpRequest.setRequestHeader("Content-Type", "application/json"); // must be after open
+        httpRequest.send(JSON.stringify(data));
+    };
+	
+	//Faz a formatação correta do arquivo json para imprimir na pagina
+    function highlight(json){
+        json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
+            var cls = 'number';
+            if (/^"/.test(match)) {
+                if (/:$/.test(match)) {
+                    cls = 'key';
+                } else {
+                    cls = 'string';
+                }
+            } else if (/true|false/.test(match)) {
+                cls = 'boolean';
+            } else if (/null/.test(match)) {
+                cls = 'null';
+            }
+            return '<span class="' + cls + '">' + match + '</span>';
+        });
+    };
+	
+	//Função chamada após o evento de onclick do botão, chamando as funções de request http
+    function myFunction(callback, infoMessage) {
+
+	   document.getElementById("response").innerHTML = responseVal ? responseVal : '';
+
+        rpcCall('GET', 'Sys.GetInfo', infoMessage ? infoMessage : false, false, function (resp) {
+            var responseVal = 'Error'; // placeholder
+
+            if (resp && resp !== true ) {
+                var jsonResponse = resp.wifi ? resp.wifi : resp;
+                var stringifyJson = JSON.stringify(jsonResponse, undefined, 2);
+                responseVal = highlight(stringifyJson);
+            } else {
+                responseVal = "Unable to get info from device";
+            }
+
+            document.getElementById("response").innerHTML = responseVal ? responseVal : '';
+            // Need to check if function since this is called by event handler
+            if ( typeof callback === "function" ) {
+                callback( resp );
+            }
+        });
+	};
+/*	
+	//Função que salva os dados de ssid e password no esp8266
+	function save_cb(){
+	
+	Request = new XMLHttpRequest();
+        var ssid = document.getElementById('ssid').value;
+        var password = document.getElementById('pass').value;
+
+        rpcCall('POST', 'Config.Set', { ssid: ssid, pass: password } , function( resp ){		
+		});
+		rpcCall('POST', 'Config.Save', {reboot: true}, function( resp ){
+		});		
+    };*/
+		
+
+/*
     function setWifiConfig()
     {
         xhr = new XMLHttpRequest();
@@ -204,7 +339,7 @@
         var data = JSON.stringify(str_request);
         xhrs.send(data);
         alert("Save success !");
-    }
+    }*/
     function  reboot(){
 
         xhrss = new XMLHttpRequest();
