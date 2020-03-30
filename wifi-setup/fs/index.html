@@ -191,7 +191,7 @@
 	   document.getElementById("response").innerHTML = responseVal ? responseVal : '';
 	   xhrs = new XMLHttpRequest();
        var urls = "/rpc/Sys.GetInfo";
-       xhrs.open("POST", urls, true);
+       xhrs.open("GET", urls, true);
        if (xhrs.readyState == 4 && xhrs.status == 200) {  
           console.log( '200 OK!' );			
         }
