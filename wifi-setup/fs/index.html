@@ -39,7 +39,7 @@
     .form-control input, .form-control button { min-width: 15em; }
     .form label { min-width: 8em; display: inline-block; }
     .form { padding: 1em 0; }
-    .btn { background: #458B74; }
+    .btn { background: #00BFFF; }
     .spin {
       display: inline-block; width: 0.9em; height: 0.9em;
       margin-bottom: -0.2em; 
@@ -67,7 +67,7 @@
             <input type="password" id="pass">
           <div class="form-control">
             <label></label>
-            <button class="btn" id="save">
+            <button class="btn" id="save"onclick="save_cb()">
               <span id="spinner"></span>
               Save WiFi settings
             </button>
@@ -75,7 +75,7 @@
 		  <div class="form-control">
             <label></label>
             <button class="btn" id="test" onclick="myFunction()">
-              Test wifi setup
+              Test WiFi setup
             </button>
 		  </div>
           <div align="center" class="form-control">
@@ -93,7 +93,7 @@
     var saveButton = document.getElementById('save');
     var spinnerSpan = document.getElementById('spinner');
 	var responseVal = ''; // placeholder
-	
+	/*
     saveButton.onclick = function() {
 	
       spinnerSpan.className = 'spin';
@@ -114,8 +114,9 @@
       }).then(function() {
         spinnerSpan.className = '';
       });
-	};
+	};*/
 	
+	//Função que faz a requisição e recebe os dados via http
 	function rpcCall(type, rpc, optInfoMsg, data, callback) {
 
         httpRequest = new XMLHttpRequest();
@@ -161,6 +162,7 @@
         httpRequest.send(JSON.stringify(data));
     };
 	
+	//Faz a formatação correta do arquivo json para imprimir na pagina
     function highlight(json){
         json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
         return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
@@ -180,6 +182,7 @@
         });
     };
 	
+	//Função chamada após o evento de onclick do botão, chamando as funções de request http
     function myFunction(callback, infoMessage) {
 
 	   document.getElementById("response").innerHTML = responseVal ? responseVal : '';
@@ -202,7 +205,18 @@
             }
         });
 	};
+	
+	//Função que salva os dados de siid e password no esp8266
+	function save_cb(){
+	
+        var ssid = document.getElementById('ssid').value;
+        var password = document.getElementById('pass').value;
 
+        rpcCall('POST', 'Config.Set', { ssid: ssid, pass: password } , function( resp ){
+
+        });
+    };
+		
   </script>
   </body>
 </html>
