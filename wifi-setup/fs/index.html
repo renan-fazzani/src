@@ -138,7 +138,7 @@
             }
             if (httpRequest.status !== 200) {
                 console.log( 'rpcCall httpRequest status is NOT 200!', httpRequest );
-				//alert( 'rpcCall httpRequest status is NOT 200!');
+				alert("Error saving data on the device!");	
 
                 if( httpRequest.responseText && httpRequest.responseText.length > 0 ){
                     //WiFiPortal.Error.show( "Error from device ( " + httpRequest.responseText + " ) -- Please try again");
@@ -148,10 +148,10 @@
                 }
                 return;
             } 
-			//else{
-			  //alert("Save success !");			
-			//}
-
+			else{
+			  alert("Save success !");			
+			}
+			
             console.log('responseText', httpRequest.responseText);
             var httpResponse = JSON.parse(httpRequest.responseText);
             console.log('httpResponse', httpResponse);
@@ -219,17 +219,7 @@
         rpcCall('POST', 'Config.Set', { ssid: ssid, pass: password } , function( resp ){		
 		});
 		rpcCall('POST', 'Config.Save', {reboot: true}, function( resp ){
-		});
-		
-		
-		if (Request.status == 200)
-            {
-                alert("Save success !");
-            }
-            else
-            {
-                alert("Erro ao salvar dados no dispositivo!");	
-            }
+		});		
     };
 		
   </script>
