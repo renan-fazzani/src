@@ -291,8 +291,31 @@
     //rpcCall('POST', 'Config.Save', {reboot: true}, function( resp ){});
     //rpcCall('POST', 'Sys.Reboot', false, function( resp ){});	
     };
+
+	function reboot(callback, infoMessage) {
+
+	   document.getElementById("response").innerHTML = responseVal ? responseVal : '';
+
+        rpcCall('GET', 'Sys.GetInfo', infoMessage ? infoMessage : false, false, function (resp) {
+            var responseVal = 'Error'; // placeholder
+
+            if (resp && resp !== true ) {
+                var jsonResponse = resp.wifi ? resp.wifi : resp;
+                var stringifyJson = JSON.stringify(jsonResponse, undefined, 2);
+                responseVal = highlight(stringifyJson);
+            } else {
+                responseVal = "Unable to get info from device";
+            }
+
+            document.getElementById("response").innerHTML = responseVal ? responseVal : '';
+            // Need to check if function since this is called by event handler
+            if ( typeof callback === "function" ) {
+                callback( resp );
+            }
+        });
+	};
 	
-    function  reboot(){
+    /*function  reboot(){
         xhrss = new XMLHttpRequest();
         var urlss = "/rpc/Sys.Reboot";
         xhrss.open("POST", urlss, true);
@@ -305,6 +328,6 @@
         }
         xhrss.send("");
         alert("reboot success !");
-    }
+    }*/
 </script>
 </html>
