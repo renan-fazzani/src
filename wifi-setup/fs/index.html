@@ -2,6 +2,8 @@
 <html lang="en">
   <head>
   <meta charset="UTF-8">
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+
   <script src="axios.min.js"></script>
   <style>
     html, body { height: 100vh; padding: 0; margin: 0;}
@@ -12,20 +14,20 @@
     button {
       color: white; padding: 0.6em 1em;
       border: none; cursor: pointer;
-	  border-radius: 20px;
+	  border-radius: 30px;
     }
     input[type=text] {
-      padding: 0.4em 2.8em; position: relative;
+      padding: 0.4em 13em; position: relative;
       border: 1px solid #cdcdcd; border-color: #F2F2F2;
       background-color: #F2F2F2; font-size: 16px;
-	  border-radius: 20px;
+	  border-radius: 30px;
 
     }
 	input[type=password] {
-      padding: 0.4em 2.8em; position: relative;
+      padding: 0.4em 13em; position: relative;
       border: 1px solid #cdcdcd; border-color: #F2F2F2;
       background-color: #F2F2F2; font-size: 16px;
-	  border-radius: 20px;
+	  border-radius: 30px;
 
     }
 	
@@ -40,6 +42,35 @@
       background-color: white; font-size: 16px;
 	  color: black; font: 13px/1.5 Verdana;
     }
+	
+ .inputWithIcon input[type="text"] {
+  padding-left: 40px;
+}
+
+ .inputWithIcon input[type="password"] {
+  padding-left: 40px;
+}
+
+.inputWithIcon {
+  position: relative;
+  margin-top: 1em;
+}
+
+.inputWithIcon i {
+  position: absolute;
+  left: 0;
+  top: 3.5px;
+  padding: 9px 8px;
+  color: #aaa;
+  transition: 0.3s;
+}
+
+.inputWithIcon input[type="text"]:focus + i {
+  color: #00b4ef;
+}
+.inputWithIcon input[type="password"]:focus + i {
+  color: #00b4ef;
+}
 	
     h1 { margin: 0.5em; padding-top: 2.0em; text-align: center; }
     .container { padding: 0 1em; margin: 1em auto; max-width: 480px; background: #FFFFFF; }
@@ -67,13 +98,14 @@
       <div class="form">
 	  <hr/>
         <div class="">
-          <div class="form-control">
-            <label>Network:</label>
-            <input type="text" id="ssid">
+		  <div class="inputWithIcon">
+            <input type="text" id="ssid" placeholder="SSID">
+            <i class="fa fa-user fa-lg fa-fw" aria-hidden="true"></i>
           </div>
-          <div class="form-control">
-            <label>Password:</label>
-            <input type="password" id="pass">
+          <div class="inputWithIcon">
+            <input type="password" id="pass" placeholder="PASS">
+            <i class="fa fa-lock fa-lg fa-fw" aria-hidden="true"></i>
+          </div>
           <div class="form-control">
             <button class="btn" id="save"onclick="save_cb()"><span id="spinner"></span>Save WiFi</button>
 			<button class="btn" id="test"onclick="myFunction()">Test WiFi</button>
