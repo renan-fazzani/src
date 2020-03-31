@@ -305,6 +305,7 @@ var responseVal = '';
                 responseVal = highlight(stringifyJson);
             } else {
                 responseVal = "Unable to get info from device";
+				console.log('Unable to get info from device');
             }
 
             document.getElementById("response").innerHTML = responseVal ? responseVal : '';
