@@ -277,8 +277,8 @@
     };
 	
     function saveWifiConfig() {
-	var ssid = document.getElementById('id_config_sta_ssid').value || '';
-    var pass = document.getElementById('id_config_sta_pass').value || '';
+	  var ssid = document.getElementById('id_config_sta_ssid').value || '';
+      var pass = document.getElementById('id_config_sta_pass').value || '';
       var data = {
         config: {
           wifi: {
@@ -292,9 +292,7 @@
     //rpcCall('POST', 'Sys.Reboot', false, function( resp ){});	
     };
 	
-	/*
     function  reboot(){
-
         xhrss = new XMLHttpRequest();
         var urlss = "/rpc/Sys.Reboot";
         xhrss.open("POST", urlss, true);
@@ -307,6 +305,6 @@
         }
         xhrss.send("");
         alert("reboot success !");
-    }*/
+    }
 </script>
 </html>
