@@ -18,23 +18,21 @@
 	  border-radius: 30px;
     }
     input[type=text] {
-      padding: 0.4em 13em; position: relative;
+      padding: 0.7em 18em; position: relative;
       border: 1px solid #cdcdcd; border-color: #F2F2F2;
-      background-color: #F2F2F2; font-size: 16px;
-	  border-radius: 30px;
+      background-color: #F2F2F2; font-size: 13px;
+	  border-radius: 30px; 
 
     }
 	input[type=password] {
-      padding: 0.4em 13em; position: relative;
+      padding: 0.7em 18em; position: relative;
       border: 1px solid #cdcdcd; border-color: #F2F2F2;
-      background-color: #F2F2F2; font-size: 16px;
+      background-color: #F2F2F2; font-size: 13px;
 	  border-radius: 30px;
-
     }
 	
 	hr {
-	  border: 0.98px solid #cdcdcd; border-color: #F2F2F2;
-	
+	  border: 0.98px solid #cdcdcd; border-color: #F2F2F2;	
 	}
 	
 	pre {
@@ -62,7 +60,7 @@
   left: 0;
   top: 3.5px;
   padding: 9px 8px;
-  color: #aaa;
+  color: #C3C3C3;
   transition: 0.3s;
 }
 
@@ -169,10 +167,10 @@
             if (httpRequest.readyState !== XMLHttpRequest.DONE) {
                 console.log('rpcCall httpRequest readyState is NOT done!', httpRequest.readyState );
                 return false;
-            }
+            }			
             if (httpRequest.status !== 200) {
                 console.log( 'rpcCall httpRequest status is NOT 200!', httpRequest );
-				alert("Error saving data to device!");	
+				//alert("Error saving data to device!");	
 
                 if( httpRequest.responseText && httpRequest.responseText.length > 0 ){
                     //WiFiPortal.Error.show( "Error from device ( " + httpRequest.responseText + " ) -- Please try again");
@@ -183,9 +181,9 @@
                 return;
             } 
 			else{
-			  alert("Save success !");			
+			  //alert("Save success !");			
 			}
-			
+			//alert("Save success ! Reboot...");	
             console.log('responseText', httpRequest.responseText);
             var httpResponse = JSON.parse(httpRequest.responseText);
             console.log('httpResponse', httpResponse);
@@ -232,7 +230,7 @@
                 var stringifyJson = JSON.stringify(jsonResponse, undefined, 2);
                 responseVal = highlight(stringifyJson);
             } else {
-                responseVal = "Unable to get info from device";
+                responseVal = "Unable to get info from device!";
             }
 
             document.getElementById("response").innerHTML = responseVal ? responseVal : '';
@@ -255,9 +253,14 @@
           }
         }
       };
-	rpcCall('POST', 'Config.Set', 'mensage', data, function( resp ){});
-    //rpcCall('POST', 'Config.Save', {reboot: true}, function( resp ){});
-    rpcCall('POST', 'Sys.Reboot', false, function( resp ){});	
+	  rpcCall('POST', 'Config.Set', 'mensage', data, function( resp ){});
+      //rpcCall('POST', 'Config.Save', {reboot: true}, function( resp ){});
+	  var r = confirm("Successful! rebot the device to apply the changes...");
+      if (r == true)
+      {
+	   window.location.reload();
+	   rpcCall('POST', 'Sys.Reboot', false, function( resp ){});
+      }
     };
 		
   </script>
