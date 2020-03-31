@@ -204,15 +204,27 @@
     }
     function saveWifiConfig() {
         xhrs = new XMLHttpRequest();
-        var urls = "/rpc/Config.Save";
+        var urls = "/rpc/Config.Set";
         xhrs.open("POST", urls, true);
         xhrs.onreadystatechange = function () {
             if (xhrs.readyState == 4 && xhrs.status == 200) {
                 alert("Save success !");
             }
         }
-        var str_request = {reboot: "true"};
-        var data = JSON.stringify(str_request);
+        //var str_request = {reboot: "true"};
+        //var data = JSON.stringify(str_request);
+		
+	   var ssid = document.getElementById('id_config_sta_ssid').value || '';
+       var pass = document.getElementById('id_config_sta_pass').value || '';
+       var data = {
+        config: {
+          wifi: {
+		    ap: { enable: false },
+            sta: { enable: true, ssid: ssid, pass: pass}
+          }
+        }
+      };		
+		
         xhrs.send(data);
         alert("Save success !");
     }
