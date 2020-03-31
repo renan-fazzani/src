@@ -226,7 +226,7 @@
 	//Request = new XMLHttpRequest();
         //var ssid = document.getElementById('ssid').value;
         //var password = document.getElementById('pass').value;
-		rpcCall('POST', 'Config.Set', 'Sending credentials to device...', { ssid: ssid, pass: pass} , function( resp ){})
+		rpcCall('POST', 'Config.Set', 'Sending credentials to device...', {"config":{"wifi":{"ap":{"enable":false}, "sta":{"enable":true, "ssid": "POLAR", "pass": "polar1234"}}}} , function( resp ){})
 
         //rpcCall('POST', 'Config.Set', data, function( resp ){	});
 		//rpcCall('POST', 'Config.Save', {reboot: true}, function( resp ){
