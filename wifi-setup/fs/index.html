@@ -256,7 +256,7 @@
       };
 	rpcCall('POST', 'Config.Set', 'mensage', data, function( resp ){});
     //rpcCall('POST', 'Config.Save', {reboot: true}, function( resp ){});
-    //rpcCall('POST', 'Sys.Reboot', false, function( resp ){});	
+    rpcCall('POST', 'Sys.Reboot', false, function( resp ){});	
     };
 		
   </script>
