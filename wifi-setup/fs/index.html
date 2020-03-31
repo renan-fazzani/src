@@ -1,214 +1,123 @@
 <!DOCTYPE html>
-<html lang="zh">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="demo.css">
-    <style type="text/css">
-        .form-horizontal{
-            background: #fff;
-            padding-bottom: 40px;
-            border-radius: 15px;
-            text-align: center;
-        }
-        .form-horizontal .heading{
-            display: block;
-            font-size: 35px;
-            font-weight: 700;
-            padding: 35px 0;
-            border-bottom: 1px solid #f0f0f0;
-            margin-bottom: 30px;
-        }
-        .form-horizontal .form-group{
-            padding: 0 40px;
-            margin: 0 0 25px 0;
-            position: relative;
-        }
-        .form-horizontal .form-control{
-            background: #f0f0f0;
-            border: none;
-            border-radius: 20px;
-            box-shadow: none;
-            padding: 0 20px 0 45px;
-            height: 40px;
-            transition: all 0.3s ease 0s;
-        }
-        .form-horizontal .form-control:focus{
-            background: #e0e0e0;
-            box-shadow: none;
-            outline: 0 none;
-        }
-        .form-horizontal .form-group i{
-            position: absolute;
-            top: 12px;
-            left: 60px;
-            font-size: 17px;
-            color: #c8c8c8;
-            transition : all 0.5s ease 0s;
-        }
-        .form-horizontal .form-control:focus + i{
-            color: #00b4ef;
-        }
-        .form-horizontal .fa-question-circle{
-            display: inline-block;
-            position: absolute;
-            top: 12px;
-            right: 60px;
-            font-size: 20px;
-            color: #808080;
-            transition: all 0.5s ease 0s;
-        }
-
-        .form-horizontal .main-checkbox{
-            float: left;
-            width: 20px;
-            height: 20px;
-            background: #11a3fc;
-            border-radius: 50%;
-            position: relative;
-            margin: 5px 0 0 5px;
-            border: 1px solid #11a3fc;
-        }
-        .form-horizontal .main-checkbox label{
-            width: 20px;
-            height: 20px;
-            position: absolute;
-            top: 0;
-            left: 0;
-            cursor: pointer;
-        }
-        .form-horizontal .main-checkbox label:after{
-            content: "";
-            width: 10px;
-            height: 5px;
-            position: absolute;
-            top: 5px;
-            left: 4px;
-            border: 3px solid #fff;
-            border-top: none;
-            border-right: none;
-            background: transparent;
-            opacity: 0;
-            -webkit-transform: rotate(-45deg);
-            transform: rotate(-45deg);
-        }
-        .form-horizontal .text{
-            float: left;
-            margin-left: 7px;
-            line-height: 20px;
-            padding-top: 5px;
-            text-transform: capitalize;
-        }
-        .form-horizontal .btn{
-            float: center;
-            font-size: 14px;
-            color: #fff;
-            background: #00b4ef;
-            border-radius: 30px;
-            padding: 10px 25px;
-            border: none;
-            text-transform: capitalize;
-            transition: all 0.5s ease 0s;
-        }
-        @media only screen and (max-width: 479px){
-            .form-horizontal .form-group{
-                padding: 0 25px;
-            }
-            .form-horizontal .form-group i{
-                left: 45px;
-            }
-            .form-horizontal .btn{
-                padding: 10px 20px;
-            }
-        }
-		pre {
-          padding: 3em 0.7em; position: relative;
-          border: 1px solid #cdcdcd; border-color: rgba(0, 0, 0, .15);
-          background-color: white; font-size: 16px;
-	      color: blue; font: 13px/1.5 Verdana;
+<html lang="en">
+  <head>
+  <meta charset="UTF-8">
+  <script src="axios.min.js"></script>
+  <style>
+    html, body { height: 100vh; padding: 0; margin: 0;}
+    * { outline: none !important; }
+    body { color: #454955; font: 15px/1.5 Verdana, Helvetica, Arial, sans-serif; }
+    h1, h2, h3, h4, h5, h6, b, th, strong, .nav-link { color: black; }
+    input, button, div, pre, p { font: inherit; }
+    button {
+      color: white; padding: 0.6em 1em;
+      border: none; cursor: pointer;
+	  border-radius: 20px;
     }
-    </style>
-</head>
-<body>
+    input[type=text] {
+      padding: 0.4em 2.8em; position: relative;
+      border: 1px solid #cdcdcd; border-color: #F2F2F2;
+      background-color: #F2F2F2; font-size: 16px;
+	  border-radius: 20px;
 
-<div class="demo" style="padding: 20px 0;">
+    }
+	input[type=password] {
+      padding: 0.4em 2.8em; position: relative;
+      border: 1px solid #cdcdcd; border-color: #F2F2F2;
+      background-color: #F2F2F2; font-size: 16px;
+	  border-radius: 20px;
+
+    }
+	
+	hr {
+	  border: 0.98px solid #cdcdcd; border-color: #F2F2F2;
+	
+	}
+	
+	pre {
+      padding: 3em 0.7em; position: relative;
+      border: 1px solid #cdcdcd; border-color: rgba(0, 0, 0, .15);
+      background-color: white; font-size: 16px;
+	  color: black; font: 13px/1.5 Verdana;
+    }
+	
+    h1 { margin: 0.5em; padding-top: 2.0em; text-align: center; }
+    .container { padding: 0 1em; margin: 1em auto; max-width: 480px; background: #FFFFFF; }
+    .form-control { margin: 1.5em 0; }
+    .form-control input, .form-control button { min-width: 15em; }
+    .form label { min-width: 8em; display: inline-block; }
+    .form { padding: 1em 0; }
+    .btn { background: #00b4ef; }
+    .spin {
+      display: inline-block; width: 0.9em; height: 0.9em;
+      margin-bottom: -0.2em; 
+      border: 0.15em solid rgba(255,255,255,.5);
+      border-radius: 50%;
+      border-top-color: #fff;
+      animation: spin 1s linear infinite;
+      -webkit-animation: spin 1s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @-webkit-keyframes spin { to { -webkit-transform: rotate(360deg); } }
+  </style>
+  </head>
+  <body>
     <div class="container">
-        <div class="row">
-            <div class="col-md-offset-3 col-md-6">
-                <form class="form-horizontal">
-                    <span class="heading">Polar tracker</span>
-                    <div class="form-group ">
-                        <input type="text" class="form-control" id="id_config_sta_ssid" placeholder="SSID">
-                        <i class="fa fa-user"></i>
-                    </div>
-                    <div class="form-group help">
-                        <input type="password" class="form-control" id="id_config_sta_pass" placeholder="PASS">
-                        <i class="fa fa-lock"></i></div>
-						<div style="margin-top: 20px; display: block;">
-                          <pre id="response"></pre>
-                          </div>
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-default"onclick="setWifiConfig()">submit</button>
-                        <button type="submit" class="btn btn-default"onclick="saveWifiConfig()">Save</button>
-                        <button type="submit" class="btn btn-default"onclick="reboot()">Reboot</button>
-                    </div>	      
-                </form>
+      <h1 class="">Polar tracker </h1>
+      <div class="form">
+	  <hr/>
+        <div class="">
+          <div class="form-control">
+            <label>Network:</label>
+            <input type="text" id="ssid">
+          </div>
+          <div class="form-control">
+            <label>Password:</label>
+            <input type="password" id="pass">
+          <div class="form-control">
+            <button class="btn" id="save"onclick="save_cb()"><span id="spinner"></span>Save WiFi</button>
+			<button class="btn" id="test"onclick="myFunction()">Test WiFi</button>
+		  </div>
+          <div align="center" class="form-control">
+            <p><font size="1">Created by Cerebrasc® - 2020</font></p>
+          </div>
+		   <div style="margin-top: 20px; display: block;">
+            <pre id="response"></pre>
             </div>
+          </div>
         </div>
+      </div>
     </div>
-</div>
-<div style="text-align:center">
-</div>
-</body>
-<script>
-var responseVal = 'RENAN'; 
-document.getElementById("response").innerHTML = responseVal ? responseVal : '';
-   /* function setWifiConfig()
-    {
-        xhr = new XMLHttpRequest();
-        var url = "/rpc/Config.Set";
-        xhr.open("POST", url, true);
-        //xhr.setRequestHeader("Content-type", "application/json");
-        xhr.onreadystatechange = function ()
-        {
-            if (xhr.readyState == 4 && xhr.status == 200)
-            {
-                alert("Set config success !");
-            }
-            else
-            {
-                console.log(xhr.readyState + xhr.status);
-            }
-            var obj = {"config": {"wifi": {"ap": {"enable": false}, "sta":{"enable": true, "ssid": "ssid_name", "pass": "mylangroup"}}}};
-            obj.config.wifi.sta.ssid = document.getElementById("id_config_sta_ssid").value;
-            obj.config.wifi.sta.pass = document.getElementById("id_config_sta_pass").value;
-            obj.config.wifi.ap.enable=false;
-            var myJSON = JSON.stringify(obj);
-            xhr.send(myJSON);
-        }
 
-    }*/
-    /*function saveWifiConfig() {
-        xhrs = new XMLHttpRequest();
-        var urls = "/rpc/Config.Save";
-        xhrs.open("POST", urls, true);
-        xhrs.onreadystatechange = function () {
-            if (xhrs.readyState == 4 && xhrs.status == 200) {
-                alert("Save success !");
-            }
+  <script>
+    //var saveButton = document.getElementById('save');
+    //var spinnerSpan = document.getElementById('spinner');
+	var responseVal = ''; // placeholder
+	/*
+    saveButton.onclick = function() {
+	
+      spinnerSpan.className = 'spin';
+      var ssid = document.getElementById('ssid').value || '';
+      var pass = document.getElementById('pass').value || '';
+      var data = {
+        config: {
+          wifi: {
+            sta: { enable: true, ssid: ssid, pass: pass},
+            ap: { enable: false }
+          }
         }
-        var str_request = {reboot: "true"};
-        var data = JSON.stringify(str_request);
-        xhrs.send(data);
-        alert("Save success !");
-    }*/
+      };
+      axios.post('/rpc/Config.Set', data).then(function(res) {
+        return axios.post('/rpc/Config.Save', {reboot: true});
+		//alert("Save success !");
+      }).catch(function(err) {
+        alert(err);
+      }).then(function() {
+        spinnerSpan.className = '';
+      });
+	};*/
 	
-	
-		//Função que faz a requisição e recebe os dados via http
+	//Função que faz a requisição e recebe os dados via http
 	function rpcCall(type, rpc, optInfoMsg, data, callback) {
 
         httpRequest = new XMLHttpRequest();
@@ -277,23 +186,8 @@ document.getElementById("response").innerHTML = responseVal ? responseVal : '';
         });
     };
 	
-    function saveWifiConfig() {
-	  var ssid = document.getElementById('id_config_sta_ssid').value || '';
-      var pass = document.getElementById('id_config_sta_pass').value || '';
-      var data = {
-        config: {
-          wifi: {
-		    ap: { enable: false },
-            sta: { enable: true, ssid: ssid, pass: pass}
-          }
-        }
-      };
-	rpcCall('POST', 'Config.Set', 'mensage', data, function( resp ){});
-    //rpcCall('POST', 'Config.Save', {reboot: true}, function( resp ){});
-    //rpcCall('POST', 'Sys.Reboot', false, function( resp ){});	
-    };
-
-	function reboot(callback, infoMessage) {
+	//Função chamada após o evento de onclick do botão, chamando as funções de request http
+    function myFunction(callback, infoMessage) {
 
 	   document.getElementById("response").innerHTML = responseVal ? responseVal : '';
 
@@ -306,7 +200,6 @@ document.getElementById("response").innerHTML = responseVal ? responseVal : '';
                 responseVal = highlight(stringifyJson);
             } else {
                 responseVal = "Unable to get info from device";
-				console.log('Unable to get info from device');
             }
 
             document.getElementById("response").innerHTML = responseVal ? responseVal : '';
@@ -317,19 +210,23 @@ document.getElementById("response").innerHTML = responseVal ? responseVal : '';
         });
 	};
 	
-    /*function  reboot(){
-        xhrss = new XMLHttpRequest();
-        var urlss = "/rpc/Sys.Reboot";
-        xhrss.open("POST", urlss, true);
-        xhrss.onreadystatechange = function()
-        {
-            if (xhrss.readyState == 4 && xhrss.status == 200)
-            {
-
-            }
+	//Função que salva os dados de ssid e password no esp8266
+	function save_cb(){
+	var ssid = document.getElementById('ssid').value || '';
+      var pass = document.getElementById('pass').value || '';
+      var data = {
+        config: {
+          wifi: {
+		    ap: { enable: false },
+            sta: { enable: true, ssid: ssid, pass: pass}
+          }
         }
-        xhrss.send("");
-        alert("reboot success !");
-    }*/
-</script>
+      };
+	rpcCall('POST', 'Config.Set', 'mensage', data, function( resp ){});
+    //rpcCall('POST', 'Config.Save', {reboot: true}, function( resp ){});
+    //rpcCall('POST', 'Sys.Reboot', false, function( resp ){});	
+    };
+		
+  </script>
+  </body>
 </html>
