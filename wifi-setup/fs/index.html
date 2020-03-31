@@ -73,8 +73,8 @@
 	
     h1 { margin: 0.5em; padding-top: 2.0em; text-align: center; }
     .container { padding: 0 1em; margin: 1em auto; max-width: 480px; background: #FFFFFF; }
-    .form-control { margin: 1.5em 0; }
-    .form-control input, .form-control button { min-width: 15em; }
+    .form-control { margin: 1.6em 0; }
+    .form-control input, .form-control button { min-width: 10em; }
     .form label { min-width: 8em; display: inline-block; }
     .form { padding: 1em 0; }
     .btn { background: #00b4ef; }
@@ -108,6 +108,7 @@
           <div class="form-control">
             <button class="btn" id="save"onclick="save_cb()"><span id="spinner"></span>Save WiFi</button>
 			<button class="btn" id="test"onclick="myFunction()">Test WiFi</button>
+			<button class="btn" id="test"onclick="reboot()">Reboot</button>
 		  </div>
           <div align="center" class="form-control">
             <p><font size="1">Created by Cerebrasc® - 2020</font></p>
@@ -243,7 +244,7 @@
 	
 	//Função que salva os dados de ssid e password no esp8266
 	function save_cb(){
-	var ssid = document.getElementById('ssid').value || '';
+	  var ssid = document.getElementById('ssid').value || '';
       var pass = document.getElementById('pass').value || '';
       var data = {
         config: {
@@ -255,12 +256,19 @@
       };
 	  rpcCall('POST', 'Config.Set', 'mensage', data, function( resp ){});
       //rpcCall('POST', 'Config.Save', {reboot: true}, function( resp ){});
-	  var r = confirm("Successful! rebot the device to apply the changes...");
+	  var r = confirm("Successful! reboot the device to apply the changes...");
       if (r == true)
       {
 	   window.location.reload();
 	   rpcCall('POST', 'Sys.Reboot', false, function( resp ){});
       }
+    };
+	
+	//Função para reiniciar o esp
+	function reboot(){	  
+	  alert("reboot success !");
+	  rpcCall('POST', 'Sys.Reboot', false, function( resp ){});
+      window.location.reload();
     };
 		
   </script>
