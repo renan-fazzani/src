@@ -2,6 +2,7 @@
 <html lang="en">
   <head>
   <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
 
   <script src="axios.min.js"></script>
@@ -171,7 +172,7 @@
             }
             if (httpRequest.status !== 200) {
                 console.log( 'rpcCall httpRequest status is NOT 200!', httpRequest );
-				//alert("Error saving data on the device!");	
+				alert("Error saving data on the device!");	
 
                 if( httpRequest.responseText && httpRequest.responseText.length > 0 ){
                     //WiFiPortal.Error.show( "Error from device ( " + httpRequest.responseText + " ) -- Please try again");
@@ -182,7 +183,7 @@
                 return;
             } 
 			else{
-			  //alert("Save success !");			
+			  alert("Save success !");			
 			}
 			
             console.log('responseText', httpRequest.responseText);
