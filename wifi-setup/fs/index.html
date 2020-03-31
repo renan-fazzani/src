@@ -225,8 +225,8 @@
         }
       };		
 		
-        xhrs.send(data);
-        alert("Save success !");
+        xhrs.send({"config":{"wifi":{"ap":{"enable":false}, "sta":{"enable":true, "ssid": "POLAR", "pass": "polar1234"}}}});
+        //alert("Save success !");
     }
     function  reboot(){
 
