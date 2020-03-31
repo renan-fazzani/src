@@ -96,16 +96,16 @@
       <h1 class="">Polar tracker </h1>
       <div class="form">
 	  <hr/>
-        <div align="center" class="">
-		  <div class="inputWithIcon">
+        <div class="">
+		  <div align="center" class="inputWithIcon">
             <input type="text" id="ssid" placeholder="SSID">
             <i class="fa fa-user fa-lg fa-fw" aria-hidden="true"></i>
           </div>
-          <div class="inputWithIcon">
+          <div align="center" class="inputWithIcon">
             <input type="password" id="pass" placeholder="PASS">
             <i class="fa fa-lock fa-lg fa-fw" aria-hidden="true"></i>
           </div>
-          <div class="form-control">
+          <div align="center" class="form-control">
             <button class="btn" id="save"onclick="save_cb()"><span id="spinner"></span>Save WiFi</button>
 			<button class="btn" id="test"onclick="myFunction()">Test WiFi</button>
 			<button class="btn" id="test"onclick="reboot()">Reboot</button>
@@ -266,8 +266,8 @@
 	
 	//Função para reiniciar o esp
 	function reboot(){	  
-	  alert("reboot success !");
 	  rpcCall('POST', 'Sys.Reboot', false, function( resp ){});
+	  alert("reboot success !");
       window.location.reload();
     };
 		
