@@ -1,0 +1,83 @@
+ 
+    html, body { height: 100vh; padding: 0; margin: 0;}
+    * { outline: none !important; }
+    body { color: #454955; font: 15px/1.5 Verdana, Helvetica, Arial, sans-serif; }
+    h1, h2, h3, h4, h5, h6, b, th, strong, .nav-link { color: black; }
+    input, button, div, pre, p { font: inherit; }
+    button {
+      color: white; padding: 0.6em 1em;
+      border: none; cursor: pointer;
+	  border-radius: 30px;
+    }
+    input[type=text] {
+      padding: 0.7em 18em; position: relative;
+      border: 1px solid #cdcdcd; border-color: #F2F2F2;
+      background-color: #F2F2F2; font-size: 13px;
+	  border-radius: 30px; 
+
+    }
+	  input[type=password] {
+      padding: 0.7em 18em; position: relative;
+      border: 1px solid #cdcdcd; border-color: #F2F2F2;
+      background-color: #F2F2F2; font-size: 13px;
+	  border-radius: 30px;
+    }
+	
+	  hr {
+	  border: 0.98px solid #cdcdcd; border-color: #F2F2F2;	
+	  }
+	
+	  pre {
+      padding: 3em 0.7em; position: relative;
+      border: 1px solid #cdcdcd; border-color: rgba(0, 0, 0, .15);
+      background-color: white; font-size: 16px;
+	    color: black; font: 13px/1.5 Verdana;
+    }
+	
+    .inputWithIcon input[type="text"] {
+    padding-left: 40px;
+    }
+
+    .inputWithIcon input[type="password"] {
+    padding-left: 40px;
+    }
+
+    .inputWithIcon {
+    position: relative;
+    margin-top: 1em;
+    }
+
+    .inputWithIcon i {
+    position: absolute;
+    left: 0;
+    top: 3.5px;
+    padding: 9px 20px;
+    color: #C3C3C3;
+    transition: 0.3s;
+    }
+
+    .inputWithIcon input[type="text"]:focus + i {
+    color: #00b4ef;
+    }
+    .inputWithIcon input[type="password"]:focus + i {
+    color: #00b4ef;
+    }
+	
+    h1 { margin: 0.5em; padding-top: 2.0em; text-align: center; }
+    .container { padding: 0 1em; margin: 1em auto; max-width: 480px; background: #FFFFFF; }
+    .form-control { margin: 1.6em 0; }
+    .form-control input, .form-control button { min-width: 10em; }
+    .form label { min-width: 8em; display: inline-block; }
+    .form { padding: 1em 0; }
+    .btn { background: #00b4ef; }
+    .spin {
+      display: inline-block; width: 0.9em; height: 0.9em;
+      margin-bottom: -0.2em; 
+      border: 0.15em solid rgba(255,255,255,.5);
+      border-radius: 50%;
+      border-top-color: #fff;
+      animation: spin 1s linear infinite;
+      -webkit-animation: spin 1s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @-webkit-keyframes spin { to { -webkit-transform: rotate(360deg); } }
