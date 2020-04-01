@@ -87,7 +87,7 @@
                 //document.getElementById("response").innerHTML = responseVal ? responseVal : '';
             }
             document.getElementById("response").innerHTML = "Station:<br>" + "ssid: " + resp.wifi.sta.ssid 
-            + "<br>" + "pass: " + resp.wifi.sta.pass + "<br>" + "Access Point:<br>" 
+            + "<br>" + "pass: " + resp.wifi.sta.pass + "<br>" + "<br>" + "Access Point:<br>" 
             + "ssid: " + resp.wifi.ap.ssid + "<br>" + "pass: " + resp.wifi.ap.pass + "<br>" + "ip: " + resp.wifi.ap.ip; 
             //document.getElementById("response").innerHTML = responseVal ? responseVal : '';
             // Need to check if function since this is called by event handler
