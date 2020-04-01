@@ -86,7 +86,7 @@
             } else {
                 responseVal = "Unable to get info from device!";
             }
-            document.getElementById("demo").innerHTML = obj.sta_ip + "/n" + obj.ap_ip +"/n" + obj.status + "/n" + obj.ssid;
+            document.getElementById("response").innerHTML = obj.sta_ip + "/n" + obj.ap_ip +"/n" + obj.status + "/n" + obj.ssid;
             //document.getElementById("response").innerHTML = responseVal ? responseVal : '';
             // Need to check if function since this is called by event handler
             if ( typeof callback === "function" ) {
