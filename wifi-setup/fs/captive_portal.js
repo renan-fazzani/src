@@ -79,8 +79,10 @@
             var responseVal = 'Error'; // placeholder
 
             if (resp && resp !== true ) {
-                var jsonResponse = resp.wifi.sta ? resp.wifi.sta : resp;
-                var stringifyJson = JSON.stringify(jsonResponse, undefined, 2);
+                var jsonResponse = resp.wifi.sta.ssid ? resp.wifi.sta.ssid : resp;
+                var jsonResponsee = resp.wifi.sta.pass ? resp.wifi.sta.pass : resp;
+                var jsonResponseee = jsonResponse + jsonResponsee;
+                var stringifyJson = JSON.stringify(jsonResponseee, undefined, 2);
                 responseVal = highlight(stringifyJson);
             } else {
                 responseVal = "Unable to get info from device!";
