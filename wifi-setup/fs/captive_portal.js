@@ -75,7 +75,7 @@
 
 	   document.getElementById("response").innerHTML = responseVal ? responseVal : '';
 
-        rpcCall('GET', 'Sys.GetInfo', infoMessage ? infoMessage : false, false, function (resp) {
+        rpcCall('GET', 'Config.Get', infoMessage ? infoMessage : false, false, function (resp) {
             var responseVal = 'Error'; // placeholder
 
             if (resp && resp !== true ) {
