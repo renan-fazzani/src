@@ -48,7 +48,7 @@
         httpRequest.open(type, '/rpc/' + rpc );
         httpRequest.setRequestHeader("Content-Type", "application/json"); // must be after open
         httpRequest.send(JSON.stringify(data));
-    };
+  };
 	
 	//Faz a formatação correta do arquivo json para imprimir na pagina
     function highlight(json){
@@ -81,18 +81,19 @@
             if (resp && resp !== true ) {
                 var jsonResponse = resp.wifi ? resp.wifi : resp;
                 var stringifyJson = JSON.stringify(jsonResponse, undefined, 2);
-                responseVal = highlight(stringifyJson);
+                var obj = JSON.parse(stringifyJson);
+                //responseVal = highlight(stringifyJson);
             } else {
                 responseVal = "Unable to get info from device!";
             }
-
-            document.getElementById("response").innerHTML = responseVal ? responseVal : '';
+            document.getElementById("demo").innerHTML = obj.sta_ip + "/n" + obj.ap_ip +"/n" + obj.status + "/n" + obj.ssid;
+            //document.getElementById("response").innerHTML = responseVal ? responseVal : '';
             // Need to check if function since this is called by event handler
             if ( typeof callback === "function" ) {
                 callback( resp );
             }
         });
-	};
+	  };
 	
 	//Função que salva os dados de ssid e password no esp8266
 	function save_cb(){
@@ -114,11 +115,18 @@
 	   window.location.reload();
 	   rpcCall('POST', 'Sys.Reboot', false, function( resp ){});
       }
-    };
+  };
 	
 	//Função para reiniciar o esp
 	function reboot(){	  
 	  rpcCall('POST', 'Sys.Reboot', false, function( resp ){});
 	  alert("reboot success !");
       window.location.reload();
-    };
+  };
+
+  function jason_parse (){
+    var txt = '{"name":"John", "age":30, "city":"New York"}'
+    var obj = JSON.parse(txt);
+    document.getElementById("demo").innerHTML = obj.name + ", " + obj.age;
+
+  };
