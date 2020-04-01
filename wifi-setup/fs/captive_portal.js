@@ -79,7 +79,7 @@
             var responseVal = 'Error'; // placeholder
 
             if (resp && resp !== true ) {
-                var jsonResponse = resp.wifi ? resp.wifi : resp;
+                var jsonResponse = resp.wifi.sta ? resp.wifi.sta : resp;
                 var stringifyJson = JSON.stringify(jsonResponse, undefined, 2);
                 responseVal = highlight(stringifyJson);
             } else {
