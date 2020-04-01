@@ -84,8 +84,9 @@
                 responseVal = highlight(stringifyJson);
             } else {
                 responseVal = "Unable to get info from device!";
+                document.getElementById("response").innerHTML = responseVal ? responseVal : '';
             }
-            document.getElementById("response").innerHTML = resp.wifi.sta.ssid + "<br>" + resp.wifi.sta.pass; 
+            document.getElementById("response").innerHTML = "ssid: " + resp.wifi.sta.ssid + "<br>" + "pass: "resp.wifi.sta.pass; 
             //document.getElementById("response").innerHTML = responseVal ? responseVal : '';
             // Need to check if function since this is called by event handler
             if ( typeof callback === "function" ) {
