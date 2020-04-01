@@ -82,13 +82,15 @@
                 var jsonResponse = resp.wifi.sta.ssid ? resp.wifi.sta.ssid : resp;
                 var stringifyJson = JSON.stringify(jsonResponse, undefined, 2);
                 responseVal = highlight(stringifyJson);
-            } else {
-                responseVal = "Unable to get info from device!";
-                //document.getElementById("response").innerHTML = responseVal ? responseVal : '';
-            }
+                //dados obtidos do .json via comando Config.Get, possui todos dados de configs disponíveis
             document.getElementById("response").innerHTML = "Station:<br>" + "ssid: " + resp.wifi.sta.ssid 
             + "<br>" + "pass: " + resp.wifi.sta.pass + "<br>" + "<br>" + "Access Point:<br>" 
             + "ssid: " + resp.wifi.ap.ssid + "<br>" + "pass: " + resp.wifi.ap.pass + "<br>" + "ip: " + resp.wifi.ap.ip; 
+            } else {
+                responseVal = "Unable to get info from device!";
+                document.getElementById("response").innerHTML = responseVal ? responseVal : '';
+            }
+
             //document.getElementById("response").innerHTML = responseVal ? responseVal : '';
             // Need to check if function since this is called by event handler
             if ( typeof callback === "function" ) {
