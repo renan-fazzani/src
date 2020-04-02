@@ -1,5 +1,6 @@
 
 	var responseVal = ''; // placeholder
+    var responseStatus = 400;
 
 	//Função que faz a requisição e recebe os dados via http
 	function rpcCall(type, rpc, optInfoMsg, data, callback) {
@@ -21,9 +22,9 @@
                 console.log('rpcCall httpRequest readyState is NOT done!', httpRequest.readyState );
                 return false;
             }			
-            if (httpRequest.status == 200) {
+            if (httpRequest.status !== 200) {
                 console.log( 'rpcCall httpRequest status is NOT 200!', httpRequest );
-				alert("Saving data to device!");	
+				//alert("Saving data to device!");	
 
                 if( httpRequest.responseText && httpRequest.responseText.length > 0 ){
                     //WiFiPortal.Error.show( "Error from device ( " + httpRequest.responseText + " ) -- Please try again");
@@ -33,9 +34,9 @@
                 }
                 return;
             } 
-			else{
-			  //alert("Save success !");			
-			}
+			else
+			  responseStatus = 200;			
+			
 			//alert("Save success ! Reboot...");	
             console.log('responseText', httpRequest.responseText);
             var httpResponse = JSON.parse(httpRequest.responseText);
@@ -113,12 +114,15 @@
       };
 	  rpcCall('POST', 'Config.Set', 'mensage', data, function( resp ){});
       //rpcCall('POST', 'Config.Save', {reboot: true}, function( resp ){});
-	  var r = confirm("Successful! reboot the device to apply the changes...");
-      if (r == true)
-      {
-	   window.location.reload();
-	   rpcCall('POST', 'Sys.Reboot', false, function( resp ){});
+      if(responseStatus == 200){
+         var r = confirm("Successful! reboot the device to apply the changes...");
+         if (r == true){
+            window.location.reload();
+            rpcCall('POST', 'Sys.Reboot', false, function( resp ){});
+         }
       }
+      else
+         alert("Error network!")
   };
 	
 	//Função para reiniciar o esp
