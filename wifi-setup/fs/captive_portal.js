@@ -21,9 +21,9 @@
                 console.log('rpcCall httpRequest readyState is NOT done!', httpRequest.readyState );
                 return false;
             }			
-            if (httpRequest.status !== 200) {
+            if (httpRequest.status == 200) {
                 console.log( 'rpcCall httpRequest status is NOT 200!', httpRequest );
-				//alert("Error saving data to device!");	
+				alert("Saving data to device!");	
 
                 if( httpRequest.responseText && httpRequest.responseText.length > 0 ){
                     //WiFiPortal.Error.show( "Error from device ( " + httpRequest.responseText + " ) -- Please try again");
