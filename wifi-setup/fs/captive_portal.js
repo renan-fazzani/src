@@ -72,7 +72,7 @@
             if (xhr.status !== 200) {
                 console.log( 'rpcCall httpRequest status is NOT 200!', xhr );
                 alert("Error saving data to device!");    
-
+                window.location.reload();
                 if( xhr.responseText && xhr.responseText.length > 0 ){
                     //WiFiPortal.Error.show( "Error from device ( " + httpRequest.responseText + " ) -- Please try again");
                     callback(true);
