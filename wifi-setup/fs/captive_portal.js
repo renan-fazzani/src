@@ -1,6 +1,5 @@
 
 	var responseVal = ''; // placeholder
-    var r;
 
 	//Função que faz a requisição e recebe os dados via http
 	function rpcCall(type, rpc, optInfoMsg, data, callback) {
@@ -49,57 +48,7 @@
         httpRequest.open(type, '/rpc/' + rpc );
         httpRequest.setRequestHeader("Content-Type", "application/json"); // must be after open
         httpRequest.send(JSON.stringify(data));
-    };
-
-    function rpc(type, rpc, optInfoMsg, data, callback) {
-
-        xhr = new XMLHttpRequest();
-
-        if (!xhr) {
-            return callback( false );
-        }
-
-        if( optInfoMsg !== undefined && optInfoMsg ){
-            //WiFiPortal.Info.show(optInfoMsg);
-        }
-
-        xhr.onreadystatechange = function () {
-
-            if (xhr.readyState !== XMLHttpRequest.DONE) {
-                console.log('rpcCall httpRequest readyState is NOT done!', xhr.readyState );
-                return false;
-            }           
-            if (xhr.status !== 200) {
-                console.log( 'rpcCall httpRequest status is NOT 200!', xhr );
-                alert("Error saving data to device!");    
-                window.location.reload();
-                if( xhr.responseText && xhr.responseText.length > 0 ){
-                    //WiFiPortal.Error.show( "Error from device ( " + httpRequest.responseText + " ) -- Please try again");
-                    callback(true);
-                } else {
-                    callback(false);
-                }
-                return;
-            } 
-            else{
-              r = confirm("Successful! reboot the device to apply the changes...");  
-              if (r == true)
-              {
-                 window.location.reload();
-                 rpcCall('POST', 'Sys.Reboot', false, function( resp ){});
-              }         
-            }
-            console.log('responseText', xhr.responseText);
-            var httpResponse = JSON.parse(xhr.responseText);
-            console.log('xhr', xhr);
-
-            callback(xhr);
-        };
-
-        xhr.open(type, '/rpc/' + rpc );
-        xhr.setRequestHeader("Content-Type", "application/json"); // must be after open
-        xhr.send(JSON.stringify(data));
-    };
+  };
 	
 	//Faz a formatação correta do arquivo json para imprimir na pagina
     function highlight(json){
@@ -148,27 +97,33 @@
                 callback( resp );
             }
         });
-	};
-
-    //Função que salva os dados de ssid e password no esp8266
-    function save_cb(){
-      var ssid = document.getElementById('ssid').value || '';
+	  };
+	
+	//Função que salva os dados de ssid e password no esp8266
+	function save_cb(){
+	  var ssid = document.getElementById('ssid').value || '';
       var pass = document.getElementById('pass').value || '';
       var data = {
         config: {
           wifi: {
-            ap: { enable: false },
+		    ap: { enable: false },
             sta: { enable: true, ssid: ssid, pass: pass}
           }
         }
       };
-      rpc('POST', 'Config.Set', 'mensage', data, function( resp ){});
-      //r = confirm("Successful! reboot the device to apply the changes...");
-    };
-
+	  rpcCall('POST', 'Config.Set', 'mensage', data, function( resp ){});
+      //rpcCall('POST', 'Config.Save', {reboot: true}, function( resp ){});
+	  var r = confirm("Successful! reboot the device to apply the changes...");
+      if (r == true)
+      {
+	   window.location.reload();
+	   rpcCall('POST', 'Sys.Reboot', false, function( resp ){});
+      }
+  };
+	
 	//Função para reiniciar o esp
 	function reboot(){	  
 	  rpcCall('POST', 'Sys.Reboot', false, function( resp ){});
 	  alert("reboot success !");
       window.location.reload();
-    };
+  };
