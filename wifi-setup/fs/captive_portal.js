@@ -49,9 +49,9 @@
         httpRequest.open(type, '/rpc/' + rpc );
         httpRequest.setRequestHeader("Content-Type", "application/json"); // must be after open
         httpRequest.send(JSON.stringify(data));
-  };
+    };
 
-  function rpc(type, rpc, optInfoMsg, data, callback) {
+    function rpc(type, rpc, optInfoMsg, data, callback) {
 
         xhr = new XMLHttpRequest();
 
@@ -69,7 +69,7 @@
                 console.log('rpcCall httpRequest readyState is NOT done!', xhr.readyState );
                 return false;
             }           
-            if (xhr.status == 200) {
+            if (xhr.status !== 200) {
                 console.log( 'rpcCall httpRequest status is NOT 200!', xhr );
                 alert("Error saving data to device!");    
 
@@ -99,7 +99,7 @@
         xhr.open(type, '/rpc/' + rpc );
         xhr.setRequestHeader("Content-Type", "application/json"); // must be after open
         xhr.send(JSON.stringify(data));
-  };
+    };
 	
 	//Faz a formatação correta do arquivo json para imprimir na pagina
     function highlight(json){
